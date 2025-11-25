@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Search } from './components/Search';
+import { Spinner } from './components/Spinner';
+import { MovieCard } from './components/MovieCard';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -17,9 +19,12 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [movieList, setMovieList] = useState([]);
-  const [isloading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMovies = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
     try {
       const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
@@ -41,6 +46,8 @@ function App() {
     } catch (error) {
       console.log(`Error fecthing movies: ${error}`);
       setErrorMessage('Error fecthing movies. Please try again later');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,8 +71,18 @@ function App() {
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <section className="all-movies">
-          <h2>All Movies</h2>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <h2 className="mt-[40px] text-center">All Movies</h2>
+          {isLoading ? (
+            <Spinner />
+          ) : errorMessage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          ) : (
+            <ul>
+              {movieList.map(movie => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </ul>
+          )}
         </section>
       </div>
     </main>
