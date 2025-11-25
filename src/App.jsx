@@ -4,14 +4,14 @@ import { Spinner } from './components/Spinner';
 import { MovieCard } from './components/MovieCard';
 import { useDebounce } from 'react-use';
 
-const API_BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const API_BASE_URL = 'https://kinopoiskapiunofficial.tech/api/v2.2';
+const API_KEY = import.meta.env.VITE_KP_API_KEY;
 
 const API_OPTIONS = {
   method: 'GET',
   headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`,
+    'X-API-KEY': API_KEY,
+    'Content-Type': 'application/json',
   },
 };
 
@@ -30,24 +30,20 @@ function App() {
 
     try {
       const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        ? `${API_BASE_URL}/films?keyword=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/films`;
 
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
+        setMovieList([]);
         throw new Error('Failed to fetch movies');
       }
 
       const data = await response.json();
+      console.log(data.items);
 
-      if (data.Response === 'False') {
-        setErrorMessage(data.Error || 'Failed to fetch movies');
-        setMovieList([]);
-        return;
-      }
-
-      setMovieList(data.results || []);
+      setMovieList(data.items);
     } catch (error) {
       console.log(`Error fecthing movies: ${error}`);
       setErrorMessage('Error fecthing movies. Please try again later');
@@ -84,7 +80,7 @@ function App() {
           ) : (
             <ul>
               {movieList.map(movie => (
-                <MovieCard key={movie.id} movie={movie} />
+                <MovieCard key={movie.kinopoiskId} movie={movie} />
               ))}
             </ul>
           )}
