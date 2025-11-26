@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { API_BASE_URL, API_OPTIONS } from './const';
 
-export const useMovies = (query = '') => {
+export const useMovies = (query = '', page) => {
   const [movieList, setMovieList] = useState([]);
+
+  const [totalPages, setTotalPages] = useState(null);
+  const [totalItems, setTotalItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -15,8 +18,8 @@ export const useMovies = (query = '') => {
         const endpoint = query
           ? `${API_BASE_URL}/api/v2.2/films?order=RATING&type=ALL&ratingFrom=0&ratingTo=10&yearFrom=1000&yearTo=3000&keyword=${encodeURIComponent(
               query
-            )}`
-          : `${API_BASE_URL}/api/v2.2/films/collections?type=TOP_POPULAR_ALL`;
+            )}&page=${page}`
+          : `${API_BASE_URL}/api/v2.2/films/collections?type=TOP_POPULAR_ALL&page=${page}`;
 
         const response = await fetch(endpoint, API_OPTIONS);
 
@@ -25,7 +28,10 @@ export const useMovies = (query = '') => {
         }
 
         const data = await response.json();
+        console.log(data);
         setMovieList(data.items);
+        setTotalPages(data.totalPages);
+        setTotalItems(data.total);
       } catch (error) {
         console.log(`Error fecthing movies: ${error}`);
         setErrorMessage('Error fecthing movies. Please try again later');
@@ -35,7 +41,7 @@ export const useMovies = (query = '') => {
     };
 
     fetchMovies();
-  }, [query]);
+  }, [query, page]);
 
-  return { movieList, isLoading, errorMessage };
+  return { movieList, isLoading, errorMessage, totalPages, totalItems };
 };

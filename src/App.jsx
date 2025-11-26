@@ -4,14 +4,30 @@ import { Spinner } from './components/Spinner';
 import { MovieCard } from './components/MovieCard';
 import { useDebounce } from 'react-use';
 import { useMovies } from './hooks';
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
+import { animateScroll as scroll, scroller } from 'react-scroll';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const onChange = page => {
+    setCurrentPage(page);
+    scroller.scrollTo('myScrollToElement', {
+      duration: 1000,
+      smooth: true,
+      offset: -50,
+    });
+  };
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
-  const { movieList, isLoading, errorMessage } = useMovies(debouncedSearchTerm);
+  const { movieList, isLoading, errorMessage, totalItems } = useMovies(
+    debouncedSearchTerm,
+    currentPage
+  );
 
   return (
     <main>
@@ -29,7 +45,7 @@ function App() {
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <section className="all-movies">
-          <h2 className="mt-[40px] text-center">
+          <h2 className="mt-[40px] text-center" name="myScrollToElement">
             Киношки, мультфильмы и сериалы
           </h2>
           {isLoading ? (
@@ -46,6 +62,17 @@ function App() {
             </ul>
           )}
         </section>
+
+        {!isLoading && (
+          <Pagination
+            total={totalItems}
+            pageSize={20}
+            onChange={onChange}
+            current={currentPage}
+            align="center"
+            hideOnSinglePage
+          />
+        )}
       </div>
     </main>
   );
