@@ -6,7 +6,7 @@ export const Search = ({ searchTerm, setSearchTerm }) => {
 
         <input
           type="text"
-          placeholder="Search through thousands of movies"
+          placeholder="Искать фильм"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />

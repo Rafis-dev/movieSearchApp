@@ -1,6 +1,6 @@
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, onClick }) => {
   return (
-    <li className="movie-card">
+    <li className="movie-card" onClick={onClick}>
       <img
         className="text-gray-100"
         src={

@@ -24,16 +24,16 @@ export const useMovies = (query = '', page) => {
         const response = await fetch(endpoint, API_OPTIONS);
 
         if (!response.ok) {
-          throw new Error('Failed to fetch movies');
+          const fail = await response.json();
+          throw new Error(`Failed to fetch movies. ${fail.message}`);
         }
 
         const data = await response.json();
-        console.log(data);
         setMovieList(data.items);
         setTotalPages(data.totalPages);
         setTotalItems(data.total);
       } catch (error) {
-        console.log(`Error fecthing movies: ${error}`);
+        console.log(error);
         setErrorMessage('Error fecthing movies. Please try again later');
       } finally {
         setIsLoading(false);

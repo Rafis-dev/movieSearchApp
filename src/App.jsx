@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search } from './components/Search';
 import { Spinner } from './components/Spinner';
 import { MovieCard } from './components/MovieCard';
@@ -6,12 +6,36 @@ import { useDebounce } from 'react-use';
 import { useMovies } from './hooks';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
-import { animateScroll as scroll, scroller } from 'react-scroll';
+import { scroller } from 'react-scroll';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [openModal, setModalOpen] = useState(false);
+
+  const onOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (openModal === true) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.overflow = 'auto';
+      document.body.style.paddingRight = '';
+    }
+  }, [openModal]);
 
   const onChange = page => {
     setCurrentPage(page);
@@ -31,16 +55,14 @@ function App() {
 
   return (
     <main>
-      <div className="pattern" />
-
       <div className="wrapper">
-        <header>
+        <div className="header-content">
           <img src="./hero-img.png" alt="Hero banner" />
           <h1>
             Ищите <span className="text-gradient">фильмы</span> без лишних
             хлопот
           </h1>
-        </header>
+        </div>
 
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
@@ -57,7 +79,12 @@ function App() {
           ) : (
             <ul>
               {movieList.map(movie => (
-                <MovieCard key={movie.kinopoiskId} movie={movie} />
+                <MovieCard
+                  key={movie.kinopoiskId}
+                  movie={movie}
+                  onClick={onOpenModal}
+                  blockScroll={false}
+                />
               ))}
             </ul>
           )}
@@ -74,6 +101,10 @@ function App() {
           />
         )}
       </div>
+
+      <Modal open={openModal} onClose={onCloseModal} center blockScroll={false}>
+        <h2>Simple centered modal</h2>
+      </Modal>
     </main>
   );
 }
