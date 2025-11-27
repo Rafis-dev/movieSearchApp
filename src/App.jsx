@@ -1,41 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Search } from './components/Search';
 import { Spinner } from './components/Spinner';
 import { MovieCard } from './components/MovieCard';
 import { useDebounce } from 'react-use';
-import { useMovies } from './hooks';
+import { useMovies } from './hooks/useMovies';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import { scroller } from 'react-scroll';
 import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
+import { ModalMovie } from './components/ModalMovie';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
   const [openModal, setModalOpen] = useState(false);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
 
-  const onOpenModal = () => {
+  const onOpenModal = id => {
     setModalOpen(true);
+    setSelectedMovieId(id);
   };
 
   const onCloseModal = () => {
     setModalOpen(false);
   };
-
-  useEffect(() => {
-    if (openModal === true) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-    } else {
-      document.body.style.overflow = 'auto';
-      document.body.style.paddingRight = '';
-    }
-  }, [openModal]);
 
   const onChange = page => {
     setCurrentPage(page);
@@ -82,7 +71,7 @@ function App() {
                 <MovieCard
                   key={movie.kinopoiskId}
                   movie={movie}
-                  onClick={onOpenModal}
+                  onClick={() => onOpenModal(movie.kinopoiskId)}
                   blockScroll={false}
                 />
               ))}
@@ -102,9 +91,11 @@ function App() {
         )}
       </div>
 
-      <Modal open={openModal} onClose={onCloseModal} center blockScroll={false}>
-        <h2>Simple centered modal</h2>
-      </Modal>
+      <ModalMovie
+        openModal={openModal}
+        onCloseModal={onCloseModal}
+        id={selectedMovieId}
+      />
     </main>
   );
 }
