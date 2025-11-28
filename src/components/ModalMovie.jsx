@@ -41,12 +41,10 @@ export const ModalMovie = ({ openModal, onCloseModal, id }) => {
                 ))}
               </div>
             </li>
-
             <li className="flex items-center mb-5 gap-5">
               <p className="movie-info-title self-start">Сюжет</p>
               <p className="movie-info-overview">{movie.description}</p>
             </li>
-
             <li className="flex items-center mb-5 gap-5">
               <p className="movie-info-title">Страна</p>
               <div className="flex gap-3">
@@ -58,19 +56,20 @@ export const ModalMovie = ({ openModal, onCloseModal, id }) => {
                 ))}
               </div>
             </li>
-
-            <li className="flex items-center mb-5 gap-5">
-              <p className="movie-info-title">Время (мин)</p>
-              <p className="movie-info-overview">{movie.filmLength}</p>
-            </li>
+            {movie.filmLength && (
+              <li className="flex items-center mb-5 gap-5">
+                <p className="movie-info-title">Время (мин)</p>
+                <p className="movie-info-overview">{movie.filmLength}</p>
+              </li>
+            )}
 
             <li className="flex items-center mb-5 gap-5">
               <p className="movie-info-title">Рейтинг кп</p>
               <p
                 className={`movie-info-rating ${
-                  movie.ratingImdb < 5
+                  movie.ratingKinopoisk < 5
                     ? 'text-red-500'
-                    : movie.ratingImdb >= 5 && movie.ratingImdb <= 7
+                    : movie.ratingKinopoisk >= 5 && movie.ratingKinopoisk <= 7
                     ? 'text-gray-200'
                     : 'text-green-400'
                 }`}
@@ -78,10 +77,11 @@ export const ModalMovie = ({ openModal, onCloseModal, id }) => {
                 {movie.ratingKinopoisk}
               </p>
             </li>
-
             <li className="flex items-center mb-5 gap-5">
               <p className="movie-info-title">Рейтинг imdb</p>
-              <p className="movie-info-rating">{movie.ratingImdb}</p>
+              <p className="movie-info-rating text-white">
+                {movie.ratingImdb ? movie.ratingImdb : 'Нет данных'}
+              </p>
             </li>
           </ul>
         </>

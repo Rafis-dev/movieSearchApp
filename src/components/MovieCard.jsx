@@ -6,27 +6,33 @@ export const MovieCard = ({ movie, onClick }) => {
         src={
           movie.posterUrlPreview ? `${movie.posterUrlPreview}` : '/no-movie.png'
         }
-        alt={`постер к фильму ${movie.nameRu}`}
+        alt={`постер к фильму ${movie.nameRu || movie.nameOriginal}`}
       />
 
       <div className="mt-4">
-        <h3>{movie.nameRu}</h3>
+        <h3>{movie.nameRu || movie.nameOriginal}</h3>
 
         <div className="content">
           <div className="rating">
             <img src="star.svg" alt="star icon" />
-            <p>
+            <p
+              className={
+                !movie.ratingKinopoisk
+                  ? ''
+                  : movie.ratingKinopoisk < 5
+                  ? 'text-red-500'
+                  : movie.ratingKinopoisk >= 5 && movie.ratingKinopoisk <= 7
+                  ? 'text-gray-200'
+                  : 'text-green-400'
+              }
+            >
               {movie.ratingKinopoisk
                 ? movie.ratingKinopoisk.toFixed(1)
                 : 'Нет данных'}
             </p>
           </div>
 
-          <span>•</span>
-
           <p className="lang">{movie.genres.map(g => g.genre).join(', ')}</p>
-
-          <span>•</span>
 
           <p className="year">{movie.year ? movie.year : 'Нет данных'}</p>
         </div>
