@@ -6,7 +6,7 @@ export const MovieCard = ({ movie, onClick }) => {
         src={
           movie.posterUrlPreview ? `${movie.posterUrlPreview}` : '/no-movie.png'
         }
-        alt={`poster to a movie ${movie.nameRu}`}
+        alt={`постер к фильму ${movie.nameRu}`}
       />
 
       <div className="mt-4">

@@ -9,6 +9,7 @@ import 'rc-pagination/assets/index.css';
 import { scroller } from 'react-scroll';
 import 'react-responsive-modal/styles.css';
 import { ModalMovie } from './components/ModalMovie';
+import { useLockBodyScroll } from './hooks/useLockBodyScroll';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,6 +37,7 @@ function App() {
   };
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+  useLockBodyScroll(openModal);
 
   const { movieList, isLoading, errorMessage, totalItems } = useMovies(
     debouncedSearchTerm,
@@ -44,6 +46,7 @@ function App() {
 
   return (
     <main>
+      <div className="pattern"></div>
       <div className="wrapper">
         <div className="header-content">
           <img src="./hero-img.png" alt="Hero banner" />
@@ -91,11 +94,13 @@ function App() {
         )}
       </div>
 
-      <ModalMovie
-        openModal={openModal}
-        onCloseModal={onCloseModal}
-        id={selectedMovieId}
-      />
+      {openModal && (
+        <ModalMovie
+          openModal={openModal}
+          onCloseModal={onCloseModal}
+          id={selectedMovieId}
+        />
+      )}
     </main>
   );
 }

@@ -3,11 +3,13 @@ import { API_BASE_URL, API_OPTIONS } from '../const';
 
 export const useMovie = id => {
   const [movie, setMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!id) return;
 
     const fetchMovie = async () => {
+      setIsLoading(true);
       try {
         const endpoint = `${API_BASE_URL}/api/v2.2/films/${id}`;
 
@@ -19,14 +21,15 @@ export const useMovie = id => {
         }
 
         const data = await response.json();
-        console.log(data);
         setMovie(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchMovie();
   }, [id]);
 
-  return movie;
+  return { movie, isLoading };
 };
