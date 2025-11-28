@@ -17,7 +17,7 @@ export const useMovie = id => {
 
         if (!response.ok) {
           const fail = await response.json();
-          throw new Error(`Failed to fetch the movie. ${fail.message}`);
+          throw new Error(`Возникла ошибка. ${fail.message}`);
         }
 
         const data = await response.json();

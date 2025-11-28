@@ -34,7 +34,9 @@ export const useMovies = (query = '', page) => {
         setTotalItems(data.total);
       } catch (error) {
         console.log(error);
-        setErrorMessage('Error fecthing movies. Please try again later');
+        setErrorMessage(
+          'Не удалось получить данные. Попробуйте вернуться позже'
+        );
       } finally {
         setIsLoading(false);
       }

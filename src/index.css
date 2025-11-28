@@ -145,8 +145,25 @@
   }
 }
 
+.movie-info-overview {
+  @apply text-white font-medium text-base lg:text-lg;
+}
+.movie-info-rating {
+  @apply font-medium text-base lg:text-lg;
+}
+
 .title-orig {
   @apply capitalize text-gray-100 font-medium text-base;
+}
+
+.movie-info-title {
+  @apply text-gray-100 font-bold text-sm lg:text-xl;
+  max-width: 120px;
+  width: 100%;
+}
+
+.movie-info-genre {
+  @apply text-white px-4 py-1 rounded-md bg-[#221f3d];
 }
 
 .react-responsive-modal-overlay {
@@ -155,17 +172,24 @@
 
 .react-responsive-modal-modal {
   background: var(--color-dark-100);
-  box-shadow: inset 0 12px 32px 0 rgba(206, 206, 251, 0.02),
-    0 0 100px 0 rgba(171, 139, 255, 0.3);
   border-radius: 14px;
-  padding: 0px 20px;
+  padding: 25px;
+  margin: 0;
   max-width: 1200px;
   width: 100%;
+  border: 2px solid rgba(57, 240, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 6px #39f0ff, 0 0 14px rgba(57, 240, 255, 0.6),
+    0 0 28px rgba(57, 240, 255, 0.35);
 }
 
-/* .react-responsive-modal-closeButton svg {
+.react-responsive-modal-closeButton svg {
   fill: #fff;
-} */
+}
+
+.react-responsive-modal-container {
+  padding: 30px;
+}
 
 @utility text-gradient {
   @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
