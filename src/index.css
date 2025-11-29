@@ -219,3 +219,57 @@
     display: none;
   }
 }
+
+/* Стили для пагинации */
+/* Отступ сверху */
+.rc-pagination {
+  margin-top: 30px !important;
+}
+
+/* Базовые элементы */
+.rc-pagination-item,
+.rc-pagination-prev .rc-pagination-item-link,
+.rc-pagination-next .rc-pagination-item-link {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  color: #ccc !important;
+  border-radius: 8px !important;
+  transition: 0.25s ease;
+}
+
+/* Текст */
+.rc-pagination-item a {
+  color: #ccc !important;
+}
+
+/* Hover */
+.rc-pagination-item:hover,
+.rc-pagination-prev:hover .rc-pagination-item-link,
+.rc-pagination-next:hover .rc-pagination-item-link {
+  border-color: #00eaff !important;
+  color: #00eaff !important;
+  box-shadow: 0 0 6px #00eaff55;
+}
+
+/* Активная страница — неоновая */
+.rc-pagination-item-active {
+  background: #00eaff !important;
+  border-color: #00eaff !important;
+  box-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff55;
+}
+
+.rc-pagination-item-active a {
+  color: #000 !important;
+  font-weight: 600;
+}
+
+/* Стрелки */
+.rc-pagination-prev button,
+.rc-pagination-next button {
+  color: #ccc !important;
+}
+
+.rc-pagination-prev:hover button,
+.rc-pagination-next:hover button {
+  color: #00eaff !important;
+}
