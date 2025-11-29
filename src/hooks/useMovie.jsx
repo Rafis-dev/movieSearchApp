@@ -7,7 +7,6 @@ export const useMovie = id => {
 
   useEffect(() => {
     if (!id) return;
-
     const fetchMovie = async () => {
       setIsLoading(true);
       try {

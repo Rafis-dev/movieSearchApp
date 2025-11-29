@@ -4,12 +4,10 @@ import { useMovie } from '../hooks/useMovie';
 export const ModalMovie = ({ openModal, onCloseModal, id }) => {
   const { movie, isLoadingMovie } = useMovie(openModal ? id : null);
 
-  console.log(movie);
-
   return (
     <Modal open={openModal} onClose={onCloseModal} center blockScroll={false}>
-      {isLoadingMovie && !movie && (
-        <p className="text-white text-center mt-[30px]">Загрузка...</p>
+      {(isLoadingMovie || !movie) && (
+        <p className="text-white text-center">Загрузка...</p>
       )}
 
       {!isLoadingMovie && movie && (
