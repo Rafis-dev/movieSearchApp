@@ -28,7 +28,7 @@
   }
 
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+    @apply mx-auto max-w-4xl text-center text-3xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
   }
 
   h2 {
@@ -78,7 +78,7 @@
   }
 
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+    @apply w-full bg-light-100/5 px-2 py-1 lg:px-4 lg:px-1 rounded-lg mt-10 max-w-3xl mx-auto;
 
     & div {
       @apply relative flex items-center;
@@ -145,6 +145,10 @@
   }
 }
 
+.modal-movie {
+  @apply flex flex-col items-start min-[840px]:flex-row min-[840px]:items-center;
+}
+
 .movie-info-overview {
   @apply text-white font-medium text-base lg:text-lg;
 }
@@ -181,6 +185,9 @@
   border-radius: 12px;
   box-shadow: 0 0 6px #39f0ff, 0 0 14px rgba(57, 240, 255, 0.6),
     0 0 28px rgba(57, 240, 255, 0.35);
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 }
 
 .react-responsive-modal-closeButton svg {
@@ -189,6 +196,9 @@
 
 .react-responsive-modal-container {
   padding: 30px;
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 }
 
 @utility text-gradient {

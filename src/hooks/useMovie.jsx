@@ -21,6 +21,7 @@ export const useMovie = id => {
         }
 
         const data = await response.json();
+
         setMovie(data);
       } catch (error) {
         console.log(error);

@@ -6,7 +6,7 @@ export const API_KEY3 = import.meta.env.VITE_KP_API_KEY3;
 export const API_OPTIONS = {
   method: 'GET',
   headers: {
-    'X-API-KEY': API_KEY3,
+    'X-API-KEY': API_KEY,
     'Content-Type': 'application/json',
   },
 };
